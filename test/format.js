@@ -7,7 +7,7 @@ describe( "Class Format", () => {
 	let Format;
 
 	before( ( done ) => {
-		
+
 		Format = require( '../lib/format.js' );
 
 		done();
@@ -76,20 +76,6 @@ describe( "Class Format", () => {
 		} catch( e ) { /*console.log(e);*/ done(); }
 	} );
 
-	it( "should complain about missing zero supression if type is 'string'", ( done ) => {
-		try {
-
-			let format = new Format( {
-				type: 'string',
-				unit: 'metric',
-				point: 'floating',
-				precisionPost: 3
-			} );
-
-		} catch( e ) { /*console.log(e);*/ done(); }
-
-	} );
-
 	it( "should complain about unknown properties", ( done ) => {
 		try {
 
@@ -126,4 +112,3 @@ describe( "Class Format", () => {
 
 
 } );
-
