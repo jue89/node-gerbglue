@@ -93,7 +93,7 @@ describe( "Class Point", () => {
 
 		point.move(
 			{ x: -0.9, d: 1 },
-			new Format( { type: 'number', unit: 'imperial', point: 'floating', precisionPost: 10 } )
+			new Format( { type: 'number', unit: 'imperial', point: 'floating' } )
 		);
 
 		assert.deepStrictEqual( point.get(), { x: '2540000', y: '-25400000' } );
