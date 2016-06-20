@@ -26,5 +26,8 @@
     "strict": true,
     "varstmt": true,
     "loopfunc": true
+  },
+  "dependencies": {
+    "json-gate": "^0.8.22"
   }
 }
