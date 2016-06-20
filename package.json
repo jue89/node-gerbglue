@@ -1,0 +1,11 @@
+{
+  "name": "node-gerbglue",
+  "version": "0.0.0",
+  "description": "Tool for gluing Gerber files together",
+  "author": "Jue <me@jue.yt>",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jue89/node-gerbglue.git"
+  },
+  "license": "MIT"
+}
