@@ -90,6 +90,21 @@ describe( "Class Format", () => {
 
 	} );
 
+	it( "should complain about unknown properties", ( done ) => {
+		try {
+
+			let format = new Format( {
+				type: 'string',
+				unit: 'metric',
+				point: 'floating',
+				precisionPost: 3,
+				unknown: true
+			} );
+
+		} catch( e ) { /*console.log(e);*/ done(); }
+
+	} );
+
 	it( "should bypass everything if the schema test passed", ( done ) => {
 
 		let f = {
