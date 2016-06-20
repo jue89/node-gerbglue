@@ -63,6 +63,18 @@ describe( "Class Format", () => {
 		} catch( e ) { /*console.log(e);*/ done(); }
 	} );
 
+	it( "should not complain about missing precisionPost if point is 'floating' and type is 'number'", ( done ) => {
+
+		let format = new Format( {
+			type: 'number',
+			unit: 'metric',
+			point: 'floating'
+		} );
+
+		done();
+
+	} );
+
 	it( "should complain about missing precisionPre if type is 'string' and point is 'fixed'", ( done ) => {
 		try {
 
