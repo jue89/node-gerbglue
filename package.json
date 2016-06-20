@@ -7,5 +7,24 @@
     "type": "git",
     "url": "https://github.com/jue89/node-gerbglue.git"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha",
+    "pretest": "jshint lib/*.js"
+  },
+  "devDependencies": {
+    "jshint": "^2.9.2",
+    "mocha": "^2.5.3",
+    "mockery": "^1.7.0"
+  },
+  "jshintConfig": {
+    "esversion": 6,
+    "node": true,
+    "strict": true,
+    "varstmt": true,
+    "loopfunc": true
+  }
 }
