@@ -12,7 +12,7 @@ describe( "Class Point", () => {
 
 			let point = new Point( );
 
-		} catch( e ) { console.log(e); done(); }
+		} catch( e ) { /*console.log(e);*/ done(); }
 	} );
 
 	it( "should complain about missing srcFormat", ( done ) => {
@@ -20,7 +20,7 @@ describe( "Class Point", () => {
 
 			let point = new Point( {} );
 
-		} catch( e ) { console.log(e); done(); }
+		} catch( e ) { /*console.log(e);*/ done(); }
 	} );
 
 	it( "should complain about missing dstFormat", ( done ) => {
@@ -28,7 +28,7 @@ describe( "Class Point", () => {
 
 			let point = new Point( {}, new Format() );
 
-		} catch( e ) { console.log(e); done(); }
+		} catch( e ) { /*console.log(e);*/ done(); }
 	} );
 
 	function testConvert( iFormat, oFormat, input, output ) {
@@ -81,6 +81,34 @@ describe( "Class Point", () => {
 		{ type: 'string', unit: 'imperial', point: 'floating', precisionPost: 3, zeroSupression: 'leading' },
 		{ d: '0.300' },
 		{ d: '0.012' }
+	);
+
+	testConvert(
+		{ type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'leading' },
+		{ type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'trailing' },
+		{ x: '1000000', y:'-1000000' },
+		{ x: '0001',    y: '-0001' }
+	);
+
+	testConvert(
+		{ type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'trailing' },
+		{ type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'leading' },
+		{ x: '0001',    y: '-0001' },
+		{ x: '1000000', y:'-1000000' }
+	);
+
+	testConvert(
+		{ type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'leading' },
+		{ type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'none' },
+		{ x: '1000000',    y:'-1000000' },
+		{ x: '0001000000', y: '-0001000000' }
+	);
+
+	testConvert(
+		{ type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'none' },
+		{ type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'leading' },
+		{ x: '0001000000',    y: '-0001000000' },
+		{ x: '1000000', y:'-1000000' }
 	);
 
 	it( 'should move a point', ( done ) => {
