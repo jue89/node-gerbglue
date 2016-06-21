@@ -111,6 +111,13 @@ describe( "Class Point", () => {
 		{ x: '1000000', y:'-1000000' }
 	);
 
+	testConvert(
+		{ type: 'string', unit: 'metric', point: 'floating', precisionPost: 6 },
+		{ type: 'string', unit: 'imperial', point: 'floating', precisionPost: 6 },
+		{ x: '1.27',    y: '-1.27' },
+		{ x: '0.050000', y:'-0.050000' }
+	);
+
 	it( 'should move a point', ( done ) => {
 
 		let point = new Point(
