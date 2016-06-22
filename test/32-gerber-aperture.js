@@ -18,7 +18,7 @@ describe( "Class GerberAperture", () => {
 		let ar = new GerberApertureReader( new ApertureStore(), '2' );
 
 		for( let i in input ) {
-			let ap = ar.instanceFromLine( input[i] );
+			let ap = ar.fromLine( input[i] );
 			assert.strictEqual( ap.toString(), output[i] );
 		}
 

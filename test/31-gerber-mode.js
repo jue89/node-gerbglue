@@ -13,7 +13,7 @@ describe( "Class GerberMode", () => {
 		let gm = new GerberModeReader();
 
 		for( let i in data ) {
-			let md = gm.instanceFromLine( data[i] );
+			let md = gm.fromLine( data[i] );
 			assert.strictEqual( md.toString(), data[i] );
 		}
 

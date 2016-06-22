@@ -5,8 +5,8 @@ const assert = require( 'assert' );
 describe( "Class ApertureStore", () => {
 
 	const Format = require( '../lib/format.js' );
-	const ApertureStore = require( '../lib/aperture-store.js' ).ApertureStore;
-	const GerberApertureAddRE = require( '../lib/aperture-store.js' ).GerberApertureAddRE;
+	const ApertureStore = require( '../lib/aperture-store.js' );
+	const GerberApertureAddReader = require( '../lib/gerber-aperture-add.js' );
 
 	it( 'should read metric apertures and convert them to imperial system', ( done ) => {
 
@@ -42,14 +42,15 @@ describe( "Class ApertureStore", () => {
 			"%ADD20R,0.050000X0.082000*%"
 		].join( "\n" );
 
-		let ad = new ApertureStore( oFormat );
+		let as = new ApertureStore( oFormat );
+
+		let ad = new GerberApertureAddReader( as, '1', iFormat );
+
 		for( let i in input ) {
-			let re = GerberApertureAddRE.exec( input[i] );
-			if( ! re ) return done( new Error( "Does not match: " + input[i] ) );
-			ad.add( '1', re, iFormat );
+			if( ! ad.fromLine( input[ i ] ) ) return done( new Error( "Does not match: " + input[i] ) );
 		}
 
-		assert.strictEqual( ad.toString(), output );
+		assert.strictEqual( as.toString(), output );
 
 		done();
 
@@ -104,21 +105,19 @@ describe( "Class ApertureStore", () => {
 			"%ADD20R,0.050000X0.082000*%"
 		].join( "\n" );
 		
-		let ad = new ApertureStore( oFormat );
+		let as = new ApertureStore( oFormat );
 
+		let ad1 = new GerberApertureAddReader( as, '1', i1Format );
 		for( let i in input1 ) {
-			let re = GerberApertureAddRE.exec( input1[i] );
-			if( ! re ) return done( new Error( "Does not match: " + input1[i] ) );
-			ad.add( '1', re, i1Format );
+			if( ! ad1.fromLine( input1[ i ] ) ) return done( new Error( "Does not match: " + input1[i] ) );
 		}
 
+		let ad2 = new GerberApertureAddReader( as, '2', i2Format );
 		for( let i in input2 ) {
-			let re = GerberApertureAddRE.exec( input2[i] );
-			if( ! re ) return done( new Error( "Does not match: " + input2[i] ) );
-			ad.add( '2', re, i2Format );
+			if( ! ad2.fromLine( input2[ i ] ) ) return done( new Error( "Does not match: " + input2[i] ) );
 		}
 
-		assert.strictEqual( ad.toString(), output );
+		assert.strictEqual( as.toString(), output );
 
 		done();
 
@@ -187,26 +186,24 @@ describe( "Class ApertureStore", () => {
 			'30': '20'
 		};
 		
-		let ad = new ApertureStore( oFormat );
+		let as = new ApertureStore( oFormat );
 
+		let ad1 = new GerberApertureAddReader( as, '1', i1Format );
 		for( let i in input1 ) {
-			let re = GerberApertureAddRE.exec( input1[i] );
-			if( ! re ) return done( new Error( "Does not match: " + input1[i] ) );
-			ad.add( '1', re, i1Format );
+			if( ! ad1.fromLine( input1[ i ] ) ) return done( new Error( "Does not match: " + input1[i] ) );
 		}
 
+		let ad2 = new GerberApertureAddReader( as, '2', i2Format );
 		for( let i in input2 ) {
-			let re = GerberApertureAddRE.exec( input2[i] );
-			if( ! re ) return done( new Error( "Does not match: " + input2[i] ) );
-			ad.add( '2', re, i2Format );
+			if( ! ad2.fromLine( input2[ i ] ) ) return done( new Error( "Does not match: " + input2[i] ) );
 		}
 
 		for( let i in input1lookup ) {
-			assert.strictEqual( ad.lookup( '1', i ), input1lookup[ i ] );
+			assert.strictEqual( as.lookup( '1', i ), input1lookup[ i ] );
 		}
 
 		for( let i in input2lookup ) {
-			assert.strictEqual( ad.lookup( '2', i ), input2lookup[ i ] );
+			assert.strictEqual( as.lookup( '2', i ), input2lookup[ i ] );
 		}
 
 		done();

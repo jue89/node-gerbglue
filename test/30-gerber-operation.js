@@ -46,7 +46,7 @@ describe( "Class GerberOperation", () => {
 		it( `should convert ${iFormat} to ${oFormat}`, ( done ) => {
 
 			for( let i in input ) {
-				let op = go.instanceFromLine( input[i] );
+				let op = go.fromLine( input[i] );
 				assert.strictEqual( op.toString(), output[i] );
 			}
 
