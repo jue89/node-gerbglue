@@ -6,14 +6,14 @@ const data = [ "G01*", "G36*", "G37*" ];
 
 describe( "Class GerberMode", () => {
 
-	const GerberMode = require( '../lib/gerber-mode.js' ).GerberMode;
-	const GerberModeRE = require( '../lib/gerber-mode.js' ).GerberModeRE;
+	const GerberModeReader = require( '../lib/gerber-mode.js' );
 
 	it( "should bypass mode selection", ( done ) => {
 
+		let gm = new GerberModeReader();
+
 		for( let i in data ) {
-			let re = GerberModeRE.exec( data[i] );
-			let md = new GerberMode( re );
+			let md = gm.instanceFromLine( data[i] );
 			assert.strictEqual( md.toString(), data[i] );
 		}
 

@@ -4,8 +4,7 @@ const assert = require( 'assert' );
 
 describe( "Class GerberAperture", () => {
 
-	const GerberAperture = require( '../lib/gerber-aperture.js' ).GerberAperture;
-	const GerberApertureRE = require( '../lib/gerber-aperture.js' ).GerberApertureRE;
+	const GerberApertureReader = require( '../lib/gerber-aperture.js' );
 
 	class ApertureStore {
 		lookup( job, aperture ) { return ( parseInt( aperture ) + parseInt( job ) ).toString(); }
@@ -16,9 +15,10 @@ describe( "Class GerberAperture", () => {
 		const input  = [ "D10*", "D11*", "D12*" ];
 		const output = [ "D12*", "D13*", "D14*" ];
 
+		let ar = new GerberApertureReader( new ApertureStore(), '2' );
+
 		for( let i in input ) {
-			let re = GerberApertureRE.exec( input[i] );
-			let ap = new GerberAperture( re, new ApertureStore(), '2' );
+			let ap = ar.instanceFromLine( input[i] );
 			assert.strictEqual( ap.toString(), output[i] );
 		}
 

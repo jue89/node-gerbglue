@@ -31,13 +31,14 @@ X197Y236I118J0D01*`;
 describe( "Class GerberOperation", () => {
 
 	const Format = require( '../lib/format.js' );
-	const GerberOperation = require( '../lib/gerber-operation.js' ).GerberOperation;
-	const GerberOperationRE = require( '../lib/gerber-operation.js' ).GerberOperationRE;
+	const GerberOperationReader = require( '../lib/gerber-operation.js' );
 
 	function testConvert( iFormat, oFormat, input, output ) {
 
 		iFormat = new Format( iFormat );
 		oFormat = new Format( oFormat );
+
+		let go = new GerberOperationReader( iFormat, oFormat );
 
 		input = input.split( '\n' );
 		output = output.split( '\n' );
@@ -45,8 +46,7 @@ describe( "Class GerberOperation", () => {
 		it( `should convert ${iFormat} to ${oFormat}`, ( done ) => {
 
 			for( let i in input ) {
-				let re = GerberOperationRE.exec( input[i] );
-				let op = new GerberOperation( re, iFormat, oFormat );
+				let op = go.instanceFromLine( input[i] );
 				assert.strictEqual( op.toString(), output[i] );
 			}
 
