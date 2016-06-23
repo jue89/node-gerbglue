@@ -36,7 +36,7 @@ describe( "Class Gerber", () => {
 			as,
 			oFormat
 		);
-console.log(as.toString());
+
 		assert.strictEqual( gf.toString(), fs.readFileSync( './test/data/40-gerber-kicad-out.gbr' ).toString() );
 
 		done();
