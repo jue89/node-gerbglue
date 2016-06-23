@@ -4,6 +4,7 @@ const assert = require( 'assert' );
 
 describe( "Class Point", () => {
 
+	const PointTransformation = require( '../lib/point-transformation.js' );
 	const Format = require( '../lib/format.js' );
 	const Point = require( '../lib/point.js' );
 
@@ -126,12 +127,30 @@ describe( "Class Point", () => {
 			new Format( { type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'leading' } )
 		);
 
-		point.move(
-			{ x: -0.9, d: 1 },
-			new Format( { type: 'number', unit: 'imperial', point: 'floating' } )
+		point.setPointTransformation( new PointTransformation( 'imperial', {
+			x: [ '+',  1 ],
+			y: [ '+', -1 ],
+		} ) );
+
+		assert.deepStrictEqual( point.get(), { x: '50800000', y: '-50800000' } );
+		done();
+
+	} );
+
+	it( 'should scale a point', ( done ) => {
+
+		let point = new Point(
+			{ x: '1000', y: '-1000' },
+			new Format( { type: 'string', unit: 'imperial', point: 'fixed', precisionPre: 3, precisionPost: 3, zeroSupression: 'leading' } ),
+			new Format( { type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6, zeroSupression: 'leading' } )
 		);
 
-		assert.deepStrictEqual( point.get(), { x: '2540000', y: '-25400000' } );
+		point.setPointTransformation( new PointTransformation( 'imperial', {
+			x: [ '*',  2 ],
+			y: [ '*', -2 ],
+		} ) );
+
+		assert.deepStrictEqual( point.get(), { x: '50800000', y: '50800000' } );
 		done();
 
 	} );

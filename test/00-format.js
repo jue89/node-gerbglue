@@ -4,15 +4,7 @@ const assert = require( 'assert' );
 
 describe( "Class Format", () => {
 
-	let Format;
-
-	before( ( done ) => {
-
-		Format = require( '../lib/format.js' );
-
-		done();
-
-	} );
+	let Format = require( '../lib/format.js' );
 
 	it( "should complain about bullshit parameter", ( done ) => {
 		try {
