@@ -2,7 +2,7 @@
 
 const assert = require( 'assert' );
 
-describe( "Class Point", () => {
+describe( "Class PointTransformation", () => {
 
 	const PointTransformation = require( '../lib/point-transformation.js' );
 
