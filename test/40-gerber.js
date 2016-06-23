@@ -96,4 +96,20 @@ describe( "Class Gerber", () => {
 
 	} );
 
+	it( "should reject files violating boundaries", ( done ) => {
+
+		let as = new ApertureStore( oFormat );
+
+		try {
+			let gf = new GerberReader(
+				'altium',
+				fs.readFileSync( './test/data/40-gerber-kicad-in.gbr' ),
+				as,
+				oFormat,
+				[ 'metric', -91.114, 148.901, -118.859, 91.155 ]
+			);
+		} catch( e ) { /*console.log( e );*/ done(); }
+
+	} );
+
 } );
