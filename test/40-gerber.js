@@ -6,6 +6,7 @@ const fs = require( 'fs' );
 describe( "Class Gerber", () => {
 
 	const Format = require( '../lib/format.js' );
+	const PointTransformation = require( '../lib/point-transformation.js' );
 	const ApertureStore = require( '../lib/aperture-store.js' );
 	const GerberReader = require( '../lib/gerber.js' );
 
@@ -109,6 +110,24 @@ describe( "Class Gerber", () => {
 				[ 'metric', -91.114, 148.901, -118.859, 91.155 ]
 			);
 		} catch( e ) { /*console.log( e );*/ done(); }
+
+	} );
+
+	it( "should read Gerber file and move all points", ( done ) => {
+
+		let gf = new GerberReader(
+			'altium',
+			fs.readFileSync( './test/data/40-gerber-altium-in.gbr' ),
+			new ApertureStore( oFormat ),
+			oFormat
+		);
+
+		assert.strictEqual(
+			gf.toString( new PointTransformation( 'metric', { 'x': [ '+', 1 ], 'y': [ '+', 1 ] } ) ),
+			fs.readFileSync( './test/data/40-gerber-altium-out-moved.gbr' ).toString()
+		);
+
+		done();
 
 	} );
 
