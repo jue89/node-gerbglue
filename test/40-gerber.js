@@ -117,14 +117,14 @@ describe( "Class Gerber", () => {
 
 		let gf = new GerberReader(
 			'altium',
-			fs.readFileSync( './test/data/40-gerber-altium-in.gbr' ),
+			fs.readFileSync( './test/data/40-gerber-move-in.gbr' ),
 			new ApertureStore( oFormat ),
 			oFormat
 		);
 
 		assert.strictEqual(
 			gf.toString( new PointTransformation( 'metric', { 'x': [ '+', 1 ], 'y': [ '+', 1 ] } ) ),
-			fs.readFileSync( './test/data/40-gerber-altium-out-moved.gbr' ).toString()
+			fs.readFileSync( './test/data/40-gerber-move-out.gbr' ).toString()
 		);
 
 		done();
