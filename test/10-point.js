@@ -4,7 +4,7 @@ const assert = require( 'assert' );
 
 describe( "Class Point", () => {
 
-	const Format = require( '../lib/format.js' );
+	const Format = require( '../lib/format.js' ).Format;
 	const Point = require( '../lib/point.js' );
 
 	it( "should complain about missing value", ( done ) => {

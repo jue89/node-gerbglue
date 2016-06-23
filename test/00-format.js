@@ -8,7 +8,7 @@ describe( "Class Format", () => {
 
 	before( ( done ) => {
 
-		Format = require( '../lib/format.js' );
+		Format = require( '../lib/format.js' ).Format;
 
 		done();
 
