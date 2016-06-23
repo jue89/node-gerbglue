@@ -26,7 +26,7 @@ describe( "Class Gerber", () => {
 
 			gf.toString();
 
-		} catch( e ) { console.log(e); done(); }
+		} catch( e ) { /*console.log(e);*/ done(); }
 
 	} );
 
@@ -57,6 +57,40 @@ describe( "Class Gerber", () => {
 		);
 
 		assert.strictEqual( gf.toString(), fs.readFileSync( './test/data/40-gerber-kicad-out.gbr' ).toString() );
+
+		done();
+
+	} );
+
+	it( "should find metric boundaries of a given file", ( done ) => {
+
+		let as = new ApertureStore( oFormat );
+
+		let gf = new GerberReader(
+			'altium',
+			fs.readFileSync( './test/data/40-gerber-kicad-in.gbr' ),
+			as,
+			oFormat
+		);
+
+		assert.deepStrictEqual( gf.getBounds( 'metric' ), [ 'metric', -91.113, 148.901, -118.859, 91.155 ] );
+
+		done();
+
+	} );
+
+	it( "should find imperial boundaries of a given file", ( done ) => {
+
+		let as = new ApertureStore( oFormat );
+
+		let gf = new GerberReader(
+			'altium',
+			fs.readFileSync( './test/data/40-gerber-kicad-in.gbr' ),
+			as,
+			oFormat
+		);
+
+		assert.deepStrictEqual( gf.getBounds( 'imperial' ), [ 'imperial', -3.5871259842519687, 5.862244094488189, -4.679488188976378, 3.5887795275590553 ] );
 
 		done();
 
