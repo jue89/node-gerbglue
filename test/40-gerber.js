@@ -11,7 +11,26 @@ describe( "Class Gerber", () => {
 
 	const oFormat = new Format( { type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6 } );
 
-	it( "should read Atium Gerber files", ( done ) => {
+	it( "should complain about incomplete file", ( done ) => {
+
+		let as = new ApertureStore( oFormat );
+
+		let gf = new GerberReader(
+			'incomplete',
+			fs.readFileSync( './test/data/40-gerber-incomplete.gbr' ),
+			as,
+			oFormat
+		);
+
+		try {
+
+			gf.toString();
+
+		} catch( e ) { console.log(e); done(); }
+
+	} );
+
+	it( "should read Altium Gerber files", ( done ) => {
 
 		let gf = new GerberReader(
 			'altium',
