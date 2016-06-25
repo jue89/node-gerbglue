@@ -3,12 +3,12 @@
 const assert = require( 'assert' );
 const fs = require( 'fs' );
 
-describe( "Class Gerber", () => {
+describe( "Class GerberReader", () => {
 
 	const Format = require( '../lib/format.js' );
 	const PointTransformation = require( '../lib/point-transformation.js' );
 	const ApertureStore = require( '../lib/aperture-store.js' );
-	const GerberReader = require( '../lib/gerber.js' );
+	const GerberReader = require( '../lib/gerber-in.js' );
 
 	const oFormat = new Format( { type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6 } );
 
