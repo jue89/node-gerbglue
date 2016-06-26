@@ -3,12 +3,12 @@
 const assert = require( 'assert' );
 const fs = require( 'fs' );
 
-describe( "Class Excellon", () => {
+describe( "Class ExcellonReader", () => {
 
 	const Format = require( '../lib/format.js' );
 	const PointTransformation = require( '../lib/point-transformation.js' );
 	const ToolStore = require( '../lib/tool-store.js' );
-	const ExcellonReader = require( '../lib/excellon.js' );
+	const ExcellonReader = require( '../lib/excellon-in.js' );
 
 	const oFormat = new Format( { type: 'string', unit: 'imperial', point: 'fixed', precisionPre: 2, precisionPost: 4 } );
 
