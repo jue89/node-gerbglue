@@ -126,6 +126,42 @@ describe( "Class ApertureStore", () => {
 
 	} );
 
+	it( 'should complain about unknown aperture id at lookup', ( done ) => {
+
+		const iFormat = new Format( { type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6 } );
+		const oFormat = new Format( { type: 'string', unit: 'imperial', point: 'fixed', precisionPre: 4, precisionPost: 6 } );
+
+		const input = [
+			'%ADD10C,0.100000*%',
+			'%ADD11C,0.150000X0.100000*%',
+			'%ADD12R,2.286000X2.286000*%',
+			'%ADD13O,2.286000X2.286000*%',
+			'%ADD14O,2.286000X2.286000X0.100000*%',
+			'%ADD15C,6.654000*%',
+			'%ADD16C,2.654000*%',
+			'%ADD17C,2.554000*%',
+			'%ADD18R,1.504000X1.254000*%',
+			'%ADD19R,1.154000X1.954000X0.100000*%',
+			'%ADD20R,2.082800X1.270000*%',
+			'%ADD21R,1.270000X2.082800*%'
+		];
+
+		let as = new ApertureStore( oFormat );
+
+		let ad = new GerberApertureAddReader( as, '1', iFormat );
+
+		for( let i in input ) {
+			if( ! ad.fromLine( input[ i ] ) ) return done( new Error( "Does not match: " + input[i] ) );
+		}
+
+		try {
+
+			as.lookup( '1', '22' );
+
+		} catch( e ) { /*console.log(e);*/ done(); }
+
+	} );
+
 	it( 'should read metric apertures from one job and imperial apertures from another job, cluster them and then give the right lookup', ( done ) => {
 
 		const i1Format = new Format( { type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6 } );

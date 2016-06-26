@@ -8,6 +8,35 @@ describe( "Class ExcellonToolAdd", () => {
 	const ToolStore = require( '../lib/tool-store.js' );
 	const ExcellonToolAddReader = require( '../lib/excellon-tool-add.js' );
 
+	it( 'should complain about unknown tool id at lookup', ( done ) => {
+
+		const iFormat = new Format( { type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6 } );
+		const oFormat = new Format( { type: 'string', unit: 'imperial', point: 'fixed', precisionPre: 4, precisionPost: 6 } );
+
+		const input = [
+			'T1C0.300',
+			'T2C1.016',
+			'T3C1.500',
+			'T4C1.600',
+			'T5C3.200'
+		];
+
+		let ts = new ToolStore( oFormat );
+
+		let ad = new ExcellonToolAddReader( ts, '1', iFormat );
+
+		for( let i in input ) {
+			if( ! ad.fromLine( input[ i ] ) ) return done( new Error( "Does not match: " + input[i] ) );
+		}
+
+		try {
+
+			ts.lookup( '1', '6' );
+
+		} catch( e ) { /*console.log(e);*/ done(); }
+
+	} );
+
 	it( 'should read metric tool sizes and convert them to imperial system', ( done ) => {
 
 		const iFormat = new Format( { type: 'string', unit: 'metric', point: 'fixed', precisionPre: 4, precisionPost: 6 } );
