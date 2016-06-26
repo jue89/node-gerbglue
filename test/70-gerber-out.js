@@ -59,7 +59,6 @@ describe( "Class GerberWriter", () => {
 			{ x: 2, y: 1 }
 		] );
 
-		fs.writeFileSync( './test/data/70-gerber-out-line.gbr', gw.toString() );
 		assert.strictEqual( gw.toString(), fs.readFileSync( './test/data/70-gerber-out-line.gbr' ).toString() );
 
 		done();
