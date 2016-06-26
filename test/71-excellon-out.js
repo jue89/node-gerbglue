@@ -20,7 +20,7 @@ describe( "Class ExcellonWriter", () => {
 		let kicad = new ExcellonReader( 'kicad', fs.readFileSync( './test/data/71-excellon-in-kicad.drl' ), ts, iFormat, oFormat );
 
 		let ew = new ExcellonWriter( 'kicad-out', oFormat, ts, 'Kicad Test File' );
-		ew.addExcellon( kicad.toString() );
+		ew.add( kicad.toString() );
 
 		assert.strictEqual( ew.toString(), fs.readFileSync( './test/data/71-excellon-out-kicad.drl' ).toString() );
 
@@ -38,8 +38,8 @@ describe( "Class ExcellonWriter", () => {
 		let altium = new ExcellonReader( 'altium', fs.readFileSync( './test/data/71-excellon-in-altium.drl' ), ts, i2Format, oFormat );
 
 		let ew = new ExcellonWriter( 'combined-out', oFormat, ts, 'Kicad Test File' );
-		ew.addExcellon( kicad.toString() );
-		ew.addExcellon( altium.toString() );
+		ew.add( kicad.toString() );
+		ew.add( altium.toString() );
 
 		assert.strictEqual( ew.toString(), fs.readFileSync( './test/data/71-excellon-out-combined.drl' ).toString() );
 

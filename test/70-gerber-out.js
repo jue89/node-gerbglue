@@ -19,7 +19,7 @@ describe( "Class GerberWriter", () => {
 		let kicad = new GerberReader( 'kicad', fs.readFileSync( './test/data/70-gerber-in-kicad.gbr' ), as, oFormat );
 
 		let gw = new GerberWriter( 'kicad-out', oFormat, as, 'Kicad Test File' );
-		gw.addGerber( kicad.toString() );
+		gw.add( kicad.toString() );
 
 		assert.strictEqual( gw.toString(), fs.readFileSync( './test/data/70-gerber-out-kicad.gbr' ).toString() );
 
@@ -35,8 +35,8 @@ describe( "Class GerberWriter", () => {
 		let altium = new GerberReader( 'altium', fs.readFileSync( './test/data/70-gerber-in-altium.gbr' ), as, oFormat );
 
 		let gw = new GerberWriter( 'combined-out', oFormat, as, 'Kicad Test File' );
-		gw.addGerber( kicad.toString() );
-		gw.addGerber( altium.toString() );
+		gw.add( kicad.toString() );
+		gw.add( altium.toString() );
 
 		assert.strictEqual( gw.toString(), fs.readFileSync( './test/data/70-gerber-out-combined.gbr' ).toString() );
 
