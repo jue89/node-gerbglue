@@ -26,7 +26,8 @@ describe( "Class Panel", () => {
 			outlineLayer: 'testLayer',
 			configUnit: 'metric',
 			placing: {
-				seperation: 'scoring'
+				seperation: 'scoring',
+				scoringLayer: 'testLayer'
 			}
 		} );
 
@@ -54,7 +55,8 @@ describe( "Class Panel", () => {
 				outlineLayer: 'bla',
 				configUnit: 'metric',
 				placing: {
-					seperation: 'scoring'
+					seperation: 'scoring',
+					scoringLayer: 'l1'
 				}
 			} );
 
@@ -90,7 +92,8 @@ describe( "Class Panel", () => {
 			outlineLayer: 'l1',
 			configUnit: 'metric',
 			placing: {
-				seperation: 'scoring'
+				seperation: 'scoring',
+				scoringLayer: 'l1'
 			}
 		} );
 
@@ -136,7 +139,9 @@ describe( "Class Panel", () => {
 			outlineLayer: 'l1',
 			configUnit: 'metric',
 			placing: {
-				seperation: 'scoring'
+				seperation: 'scoring',
+				scoringLayer: 'l1',
+				margin: [ 1, 2, 3, 4 ]
 			}
 		} );
 
@@ -151,17 +156,20 @@ describe( "Class Panel", () => {
 
 		p.addPCB( 'pcb2', {
 			dir: './test/data',
-			padding: [ 0, 0, 0, 0 ],
+			padding: [ 0, 0, 1, 0 ],
 			layers: {
 				'l1': { file: '80-panel-l1.gbr' },
 				'l2': { file: '80-panel-l2.drl', format: { unit: 'metric', precisionPre: 3, precisionPost: 3, zeroSupression: 'leading' } }
 			}
 		} );
 
-		p._pcbs['pcb1'].place( {x:0,y:0} );
+		p.genPanel( [
+			[ 'pcb1', 'pcb2' ],
+			[ null, 'pcb1' ],
+			[ 'pcb1', null ]
+		] );
 
-		p._pcbs['pcb1'].place( {x:0,y:30} );
-
+		fs.writeFileSync( './test/data/80-panel-out-l1.gbr', p._layers.l1.writer.toString() );
 		fs.writeFileSync( './test/data/80-panel-out-l2.drl', p._layers.l2.writer.toString() );
 
 		done();
