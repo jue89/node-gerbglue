@@ -110,13 +110,13 @@ describe( "Class Panel", () => {
 
 	} );
 
-	it( "should read PCBs", ( done ) => {
+	it( "should read PCBs and combine them to a panel", ( done ) => {
 
 		let p = new Panel( {
-			dir: '.',
+			dir: '/tmp',
 			layers: {
-				'l1': {
-					file: 'l1.gbr',
+				'outline': {
+					file: 'gerbglue-outline.gbr',
 					type: 'gerber',
 					format: {
 						unit: 'metric',
@@ -125,8 +125,29 @@ describe( "Class Panel", () => {
 						zeroSupression: 'leading'
 					}
 				},
-				'l2': {
-					file: 'l2.drl',
+				'scoring': {
+					file: 'gerbglue-scoring.gbr',
+					type: 'gerber',
+					mandatory: false,
+					format: {
+						unit: 'metric',
+						precisionPre: 4,
+						precisionPost: 6,
+						zeroSupression: 'leading'
+					}
+				},
+				'top': {
+					file: 'gerbglue-top.gbr',
+					type: 'gerber',
+					format: {
+						unit: 'metric',
+						precisionPre: 4,
+						precisionPost: 6,
+						zeroSupression: 'leading'
+					}
+				},
+				'drill': {
+					file: 'gerbglue-drill.drl',
 					type: 'excellon',
 					format: {
 						unit: 'imperial',
@@ -136,11 +157,11 @@ describe( "Class Panel", () => {
 					}
 				}
 			},
-			outlineLayer: 'l1',
+			outlineLayer: 'outline',
 			configUnit: 'metric',
 			placing: {
 				seperation: 'scoring',
-				scoringLayer: 'l1',
+				scoringLayer: 'scoring',
 				margin: [ 1, 2, 3, 4 ]
 			}
 		} );
@@ -149,17 +170,19 @@ describe( "Class Panel", () => {
 			dir: './test/data',
 			padding: [ 0, 0, 0, 0 ],
 			layers: {
-				'l1': { file: '80-panel-l1.gbr' },
-				'l2': { file: '80-panel-l2.drl', format: { unit: 'metric', precisionPre: 3, precisionPost: 3, zeroSupression: 'leading' } }
+				'outline': { file: '80-panel-l1.gbr' },
+				'top': { file: '80-panel-l1.gbr' },
+				'drill': { file: '80-panel-l2.drl', format: { unit: 'metric', precisionPre: 3, precisionPost: 3, zeroSupression: 'leading' } }
 			}
 		} );
 
 		p.addPCB( 'pcb2', {
 			dir: './test/data',
-			padding: [ 0, 0, 1, 0 ],
+			padding: [ 1, 1, 1, 1 ],
 			layers: {
-				'l1': { file: '80-panel-l1.gbr' },
-				'l2': { file: '80-panel-l2.drl', format: { unit: 'metric', precisionPre: 3, precisionPost: 3, zeroSupression: 'leading' } }
+				'outline': { file: '80-panel-l1.gbr' },
+				'top': { file: '80-panel-l1.gbr' },
+				'drill': { file: '80-panel-l2.drl', format: { unit: 'metric', precisionPre: 3, precisionPost: 3, zeroSupression: 'leading' } }
 			}
 		} );
 
@@ -168,9 +191,6 @@ describe( "Class Panel", () => {
 			[ null, 'pcb1' ],
 			[ 'pcb1', null ]
 		] );
-
-		fs.writeFileSync( './test/data/80-panel-out-l1.gbr', p._layers.l1.writer.toString() );
-		fs.writeFileSync( './test/data/80-panel-out-l2.drl', p._layers.l2.writer.toString() );
 
 		done();
 
