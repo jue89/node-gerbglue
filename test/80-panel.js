@@ -162,7 +162,7 @@ describe( "Class Panel", () => {
 			placing: {
 				seperation: 'scoring',
 				scoringLayer: 'scoring',
-				margin: [ 1, 2, 3, 4 ]
+				margin: [ 5, 5, 5, 5 ]
 			}
 		} );
 
